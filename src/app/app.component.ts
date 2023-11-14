@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './user';
 import { Address } from './address';
+import { passwordValidator } from './password-validator';
+import { emailValidator } from './email-validator';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +23,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
       this.userForm = this.fb.group({
         credentials: this.fb.group({
-          name: ['Dr'],
-          email: ['test@test.test'],
-          password: ['test1234'],
+          name: ['Dr', [Validators.required, Validators.minLength(4)]],
+          email: ['test@test.test', [Validators.required, emailValidator]],
+          password: ['test1234', [Validators.required, passwordValidator]],
         }),
         address: this.fb.group({
           street: ['La rivière'],

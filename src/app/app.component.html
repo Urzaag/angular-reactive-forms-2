@@ -3,14 +3,31 @@
     <div>
       <label for="name">Name</label>
       <input type="text" id="name" formControlName="name">
+      <div *ngIf="userForm.get('credentials.name')?.errors && userForm.get('credentials.name')?.touched" class="error-msg">
+        <div [hidden]="!userForm.get('credentials.name')?.errors?.['required']">username is required</div>
+        <div [hidden]="!userForm.get('credentials.name')?.invalid">username is invalid</div>
+      </div>
     </div>
     <div>
-      <label for="email">Email</label>
+      <label for="email">
+        Email
+        <div *ngIf="userForm.get('credentials.email')?.errors && !userForm.get('credentials.email')?.pristine" class="error-msg">
+          <div [hidden]="!userForm.get('credentials.password')?.errors?.['required']">Email is required</div>
+          <div [hidden]="!userForm.get('credentials.password')?.invalid">Email is invalid: {{ userForm.get('credentials.email')?.errors?.['email'].rules }}</div>
+        </div>
+      </label>
       <input type="email" id="email" formControlName="email">
     </div>
     <div>
-      <label for="password">Password</label>
+      <label for="password">
+        Password
+        <div *ngIf="userForm.get('credentials.password')?.errors && !userForm.get('credentials.password')?.pristine" class="error-msg">
+          <div [hidden]="!userForm.get('credentials.password')?.errors?.['required']">Password is required</div>
+          <div [hidden]="!userForm.get('credentials.password')?.invalid">Password is invalid: {{ userForm.get('credentials.password')?.errors?.['password'].rules }}</div>
+        </div>
+      </label>
       <input type="password" id="password" formControlName="password">
+      
     </div>
   </div>
   <div formGroupName="address">
@@ -29,7 +46,6 @@
   </div>
   <button type="submit">Submit</button>
 </form>
-
 <div *ngIf="user">
   <h2>Submitted</h2>
   <ul>
